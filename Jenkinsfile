@@ -12,26 +12,22 @@ pipeline {
                 }
             }
         }
-        stage('Build') {
-            steps {
-                echo 'Building play-a'
-                sh "cd play-a; $sbt compile"
-                echo 'Building play-b'
-                sh "cd play-b; $sbt compile"
-            }
-        }
         stage('Test') {
             steps {
-                echo 'Testing play-a'
-                sh "cd play-a; $sbt test"
-                echo 'Testing play-b'
-                sh "cd play-b; $sbt test"
+                sh "cd monorepo-library && $sbt test"
+                sh "cd play-a && $sbt test"
+                sh "cd play-b && $sbt test"
+            }
+            post {
+                always {
+                    junit "*/target/test-reports/*.xml"
+                }
             }
         }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying....'
-            }
-        }
+//        stage('Deploy') {
+//            steps {
+//                echo 'Deploying....'
+//            }
+//        }
     }
 }

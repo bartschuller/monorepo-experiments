@@ -1,0 +1,1 @@
+case class Libby(name: String)
