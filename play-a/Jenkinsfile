@@ -16,9 +16,7 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh "cd monorepo-library && $sbt test"
-                sh "cd play-a && $sbt test"
-                sh "cd play-b && $sbt test"
+                sh "$sbt test"
             }
             post {
                 always {
