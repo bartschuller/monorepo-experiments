@@ -11,7 +11,7 @@ pipeline {
                     env.sbt= "${sbtHome}/bin/sbt -no-colors -batch"
 
                     checkout([$class: 'GitSCM',
-                              branches: [[name: '*/branchName']],
+                              branches: [[name: '*/master']],
                               doGenerateSubmoduleConfigurations: false,
                               extensions: [
                                       [$class: 'SparseCheckoutPaths',  sparseCheckoutPaths:[[$class:'SparseCheckoutPath', path:'play-a/']]]
