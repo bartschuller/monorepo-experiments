@@ -11,23 +11,20 @@ pipeline {
                     env.sbt= "${sbtHome}/bin/sbt -no-colors -batch"
 
                     checkout([$class: 'GitSCM',
-                              branches: [[name: '*/master']],
-                              doGenerateSubmoduleConfigurations: false,
                               extensions: [
                                       [$class: 'SparseCheckoutPaths',  sparseCheckoutPaths:[[$class:'SparseCheckoutPath', path:'play-a/']]]
-                              ],
-                              submoduleCfg: [],
-                              userRemoteConfigs: [[url: 'https://github.com/bartschuller/monorepo-experiments.git']]])
+                              ]
+                    ])
                 }
             }
         }
         stage('Test') {
             steps {
-                sh "$sbt test"
+                sh "cd play-a && $sbt test"
             }
             post {
                 always {
-                    junit "target/test-reports/*.xml"
+                    junit "play-a/target/test-reports/*.xml"
                 }
             }
         }
