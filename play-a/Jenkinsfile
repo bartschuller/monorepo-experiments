@@ -9,8 +9,15 @@ pipeline {
                 script {
                     def sbtHome = tool 'sbt'
                     env.sbt= "${sbtHome}/bin/sbt -no-colors -batch"
-                    def scmVars = checkout scm
-                    print scmVars
+
+                    checkout([$class: 'GitSCM',
+                              branches: [[name: '*/branchName']],
+                              doGenerateSubmoduleConfigurations: false,
+                              extensions: [
+                                      [$class: 'SparseCheckoutPaths',  sparseCheckoutPaths:[[$class:'SparseCheckoutPath', path:'play-a/']]]
+                              ],
+                              submoduleCfg: [],
+                              userRemoteConfigs: [[url: 'https://github.com/bartschuller/monorepo-experiments.git']]])
                 }
             }
         }
