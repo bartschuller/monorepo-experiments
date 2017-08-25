@@ -7,8 +7,14 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
 scalaVersion := "2.12.2"
 
-libraryDependencies += guice
-libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.0" % Test
+libraryDependencies ++= Seq(
+    guice
+    "org.smop" %% "monorepo-library" %% "1.0-SNAPSHOT"
+    "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.0" % Test
+)
+
+resolvers += 
+"Artifactory" at "http://localhost:8081/artifactory/sbt-dev-local/"
 
 // Adds additional packages into Twirl
 //TwirlKeys.templateImports += "org.smop.controllers._"
