@@ -1,29 +1,32 @@
 #!/usr/bin/env groovy
 
 pipeline {
-    agent any
+    agent {
+        node {
+            label 'common-ws-agent'
+            customWorkspace 'monorepo-experiments-master'
+        }
+    }
 
     stages {
-        stage('init') {
+//        stage('init') {
+//            steps {
+//                script {
+//                    def sbtHome = tool 'sbt'
+//                    env.sbt= "${sbtHome}/bin/sbt -no-colors -batch"
+//                    def scmVars = checkout scm
+//                    print scmVars
+//                }
+//            }
+//        }
+        stage('monorepo-library') {
             steps {
-                script {
-                    def sbtHome = tool 'sbt'
-                    env.sbt= "${sbtHome}/bin/sbt -no-colors -batch"
-                    def scmVars = checkout scm
-                    print scmVars
-                }
+                build 'monorepo-library'
             }
         }
-        stage('Test') {
+        stage('play-a') {
             steps {
-                sh "cd monorepo-library && $sbt test"
-                sh "cd play-a && $sbt test"
-                sh "cd play-b && $sbt test"
-            }
-            post {
-                always {
-                    junit "*/target/test-reports/*.xml"
-                }
+                build 'play-a'
             }
         }
 //        stage('Deploy') {
