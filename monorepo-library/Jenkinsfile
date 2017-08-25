@@ -1,12 +1,7 @@
 #!/usr/bin/env groovy
 
 pipeline {
-    agent {
-        node {
-            label 'common-ws-agent'
-            customWorkspace 'monorepo-experiments-master'
-        }
-    }
+    agent none
     options {
         skipDefaultCheckout true
     }
@@ -20,6 +15,12 @@ pipeline {
             }
         }
         stage('Test') {
+            agent {
+                node {
+                    label 'common-ws-agent'
+                    customWorkspace 'monorepo-experiments-master'
+                }
+            }
             steps {
                 sh "cd monorepo-library && $sbt test publish"
             }
