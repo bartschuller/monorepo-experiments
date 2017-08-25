@@ -14,7 +14,7 @@ libraryDependencies ++= Seq(
 )
 
 resolvers += 
-"Artifactory" at "http://localhost:8081/artifactory/sbt-dev-local/"
+"Artifactory" at "http://artifactory-oss:8081/artifactory/sbt-dev-local/"
 
 // Adds additional packages into Twirl
 //TwirlKeys.templateImports += "org.smop.controllers._"
