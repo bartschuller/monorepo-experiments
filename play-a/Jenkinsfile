@@ -1,7 +1,12 @@
 #!/usr/bin/env groovy
 
 pipeline {
-    agent any
+    agent {
+        node {
+            label 'common-ws-agent'
+            customWorkspace 'monorepo-experiments-master'
+        }
+    }
 
     stages {
         stage('init') {
@@ -9,12 +14,6 @@ pipeline {
                 script {
                     def sbtHome = tool 'sbt'
                     env.sbt= "${sbtHome}/bin/sbt -no-colors -batch"
-
-                    checkout([$class: 'GitSCM',
-                              extensions: [
-                                      [$class: 'SparseCheckoutPaths',  sparseCheckoutPaths:[[$class:'SparseCheckoutPath', path:'play-a/']]]
-                              ]
-                    ])
                 }
             }
         }
