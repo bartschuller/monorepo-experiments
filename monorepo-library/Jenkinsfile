@@ -19,7 +19,7 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh "cd monorepo-library && $sbt test"
+                sh "cd monorepo-library && $sbt test publish"
             }
             post {
                 always {
