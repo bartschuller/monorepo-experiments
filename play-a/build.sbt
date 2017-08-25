@@ -9,7 +9,7 @@ scalaVersion := "2.12.2"
 
 libraryDependencies ++= Seq(
     guice,
-    "org.smop" %% "monorepo-library" % "1.0-SNAPSHOT",
+    "org.smop" %% "monorepo-library" % "0.1-SNAPSHOT",
     "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.0" % Test
 )
 
