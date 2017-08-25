@@ -5,6 +5,7 @@ pipeline {
         node {
             label 'common-ws-agent'
             customWorkspace 'monorepo-experiments-master'
+            reuseNode true
         }
     }
     options {
