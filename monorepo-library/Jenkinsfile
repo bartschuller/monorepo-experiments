@@ -1,18 +1,17 @@
 #!/usr/bin/env groovy
 
 pipeline {
-    agent none
+    agent {
+        node {
+            label 'common-ws-agent'
+            customWorkspace 'monorepo-experiments-master'
+        }
+    }
     options {
         skipDefaultCheckout true
     }
     stages {
         stage('init') {
-            agent {
-                node {
-                    label 'common-ws-agent'
-                    customWorkspace 'monorepo-experiments-master'
-                }
-            }
             steps {
                 script {
                     def sbtHome = tool 'sbt'
@@ -21,12 +20,6 @@ pipeline {
             }
         }
         stage('Test') {
-            agent {
-                node {
-                    label 'common-ws-agent'
-                    customWorkspace 'monorepo-experiments-master'
-                }
-            }
             steps {
                 sh "cd monorepo-library && $sbt test publish"
             }
@@ -36,10 +29,5 @@ pipeline {
                 }
             }
         }
-//        stage('Deploy') {
-//            steps {
-//                echo 'Deploying....'
-//            }
-//        }
     }
 }
