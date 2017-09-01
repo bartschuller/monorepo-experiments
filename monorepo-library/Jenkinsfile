@@ -21,8 +21,9 @@ pipeline {
         }
         stage('Test') {
             steps {
-                dir '/var/jenkins_home/monorepo-experiments-master/monorepo-library'
-                sh "$sbt test publish"
+                dir('/var/jenkins_home/monorepo-experiments-master/monorepo-library') {
+                    sh "$sbt test publish"
+                }
             }
             post {
                 always {
