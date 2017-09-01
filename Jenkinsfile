@@ -9,16 +9,17 @@ pipeline {
     }
 
     stages {
-//        stage('init') {
-//            steps {
+        stage('init') {
+            steps {
+                  checkout scm
 //                script {
 //                    def sbtHome = tool 'sbt'
 //                    env.sbt= "${sbtHome}/bin/sbt -no-colors -batch"
 //                    def scmVars = checkout scm
 //                    print scmVars
 //                }
-//            }
-//        }
+            }
+        }
         stage('monorepo-library') {
             steps {
                 build 'monorepo-library'
