@@ -22,7 +22,7 @@ pipeline {
         stage('monorepo-library') {
             when {
                 expression {
-                    matches = sh(returnStdout: true, script: "git diff --name-only $MY_GIT_PREVIOUS_SUCCESSFUL_COMMIT|egrep '^monorepo-library'")
+                    matches = sh(returnStdout: true, script: "git diff --name-only $MY_GIT_PREVIOUS_SUCCESSFUL_COMMIT|egrep '^monorepo-library'; true")
                     return matches != ''
                 }
             }
@@ -33,7 +33,7 @@ pipeline {
         stage('play-a') {
             when {
                 expression {
-                    matches = sh(returnStdout: true, script: "git diff --name-only $MY_GIT_PREVIOUS_SUCCESSFUL_COMMIT|egrep '^play-a'")
+                    matches = sh(returnStdout: true, script: "git diff --name-only $MY_GIT_PREVIOUS_SUCCESSFUL_COMMIT|egrep '^play-a'; true")
                     return matches != ''
                 }
             }
@@ -44,7 +44,7 @@ pipeline {
         stage('play-b') {
             when {
                 expression {
-                    matches = sh(returnStdout: true, script: "git diff --name-only $MY_GIT_PREVIOUS_SUCCESSFUL_COMMIT|egrep '^play-b'")
+                    matches = sh(returnStdout: true, script: "git diff --name-only $MY_GIT_PREVIOUS_SUCCESSFUL_COMMIT|egrep '^play-b'; true")
                     return matches != ''
                 }
             }
