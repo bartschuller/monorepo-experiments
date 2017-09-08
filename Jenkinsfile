@@ -13,9 +13,7 @@ pipeline {
             steps {
                 script {
                     def scmVars = checkout scm
-                    print scmVars
                     env.MY_GIT_PREVIOUS_SUCCESSFUL_COMMIT = scmVars.GIT_PREVIOUS_SUCCESSFUL_COMMIT
-                    echo sh(returnStdout: true, script: 'env')
                 }
             }
         }
@@ -23,7 +21,7 @@ pipeline {
             when {
                 expression {
                     matches = sh(returnStatus:true, script: "git diff --name-only $MY_GIT_PREVIOUS_SUCCESSFUL_COMMIT|egrep -q '^monorepo-library'")
-                    return matches
+                    return !matches
                 }
             }
             steps {
@@ -34,7 +32,7 @@ pipeline {
             when {
                 expression {
                     matches = sh(returnStatus: true, script: "git diff --name-only $MY_GIT_PREVIOUS_SUCCESSFUL_COMMIT|egrep -q '^play-a'")
-                    return matches
+                    return !matches
                 }
             }
             steps {
@@ -45,7 +43,7 @@ pipeline {
             when {
                 expression {
                     matches = sh(returnStatus: true, script: "git diff --name-only $MY_GIT_PREVIOUS_SUCCESSFUL_COMMIT|egrep -q '^play-b'")
-                    return matches
+                    return !matches
                 }
             }
             steps {
