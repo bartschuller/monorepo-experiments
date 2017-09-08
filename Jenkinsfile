@@ -22,7 +22,7 @@ pipeline {
         stage('monorepo-library') {
             when {
                 expression {
-                    matches = sh(returnStdout: true, script: "git diff --name-only $MY_GIT_PREVIOUS_SUCCESSFUL_COMMIT|egrep '^monorepo-library'; true")
+                    matches = sh(returnStdout: true, script: "true")
                     return true
                 }
             }
