@@ -16,18 +16,20 @@ pipeline {
                 script {
                     def sbtHome = tool 'sbt'
                     env.sbt= "${sbtHome}/bin/sbt -no-colors -batch"
+
+                    env.projectDir = '/var/jenkins_home/monorepo-experiments-master/monorepo-library'
                 }
             }
         }
         stage('Test') {
             steps {
-                dir('/var/jenkins_home/monorepo-experiments-master/monorepo-library') {
+                dir(projectDir) {
                     sh "$sbt test publish"
                 }
             }
             post {
                 always {
-                    junit "monorepo-library/target/test-reports/*.xml"
+                    junit "$projectDir/target/test-reports/*.xml"
                 }
             }
         }
