@@ -1,0 +1,40 @@
+#!/usr/bin/env groovy
+
+def projectDir = '/var/jenkins_home/monorepo-experiments-master/play-b'
+
+pipeline {
+    agent {
+        node {
+            label 'common-ws-agent'
+            customWorkspace 'monorepo-experiments-master'
+        }
+    }
+    options {
+        skipDefaultCheckout true
+    }
+    stages {
+        stage('init') {
+            steps {
+                script {
+                    def sbtHome = tool 'sbt'
+                    env.sbt= "${sbtHome}/bin/sbt -no-colors -batch"
+
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                dir(projectDir) {
+                    sh "$sbt test"
+                }
+            }
+            post {
+                always {
+                    dir(projectDir) {
+                        junit "target/test-reports/*.xml"
+                    }
+                }
+            }
+        }
+    }
+}
