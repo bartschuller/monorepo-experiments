@@ -1,5 +1,7 @@
 #!/usr/bin/env groovy
 
+def projectDir = '/var/jenkins_home/monorepo-experiments-master/monorepo-library'
+
 pipeline {
     agent {
         node {
@@ -17,7 +19,6 @@ pipeline {
                     def sbtHome = tool 'sbt'
                     env.sbt= "${sbtHome}/bin/sbt -no-colors -batch"
 
-                    env.projectDir = '/var/jenkins_home/monorepo-experiments-master/monorepo-library'
                 }
             }
         }
@@ -29,7 +30,7 @@ pipeline {
             }
             post {
                 always {
-                    junit "${env.projectDir}/target/test-reports/*.xml"
+                    junit "${projectDir}/target/test-reports/*.xml"
                 }
             }
         }
