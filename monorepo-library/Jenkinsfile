@@ -30,8 +30,9 @@ pipeline {
             }
             post {
                 always {
-                    echo "${projectDir}/target/test-reports/*.xml"
-                    junit "${projectDir}/target/test-reports/*.xml"
+                    dir(projectDir) {
+                        junit "target/test-reports/*.xml"
+                    }
                 }
             }
         }
