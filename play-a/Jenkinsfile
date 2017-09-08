@@ -1,5 +1,7 @@
 #!/usr/bin/env groovy
 
+def projectDir = '/var/jenkins_home/monorepo-experiments-master/play-a'
+
 pipeline {
     agent {
         node {
@@ -16,23 +18,23 @@ pipeline {
                 script {
                     def sbtHome = tool 'sbt'
                     env.sbt= "${sbtHome}/bin/sbt -no-colors -batch"
+
                 }
             }
         }
         stage('Test') {
             steps {
-                sh "cd play-a && $sbt test"
+                dir(projectDir) {
+                    sh "$sbt test"
+                }
             }
             post {
                 always {
-                    junit "play-a/target/test-reports/*.xml"
+                    dir(projectDir) {
+                        junit "target/test-reports/*.xml"
+                    }
                 }
             }
         }
-//        stage('Deploy') {
-//            steps {
-//                echo 'Deploying....'
-//            }
-//        }
     }
 }
