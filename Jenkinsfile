@@ -11,13 +11,12 @@ pipeline {
     stages {
         stage('init') {
             steps {
-                  checkout scm
-//                script {
-//                    def sbtHome = tool 'sbt'
-//                    env.sbt= "${sbtHome}/bin/sbt -no-colors -batch"
-//                    def scmVars = checkout scm
-//                    print scmVars
-//                }
+                script {
+                    echo sh(returnStdout: true, script: 'env')
+                    def scmVars = checkout scm
+                    echo scmVars
+                    echo sh(returnStdout: true, script: 'env')
+                }
             }
         }
         stage('monorepo-library') {
@@ -30,10 +29,5 @@ pipeline {
                 build 'play-a'
             }
         }
-//        stage('Deploy') {
-//            steps {
-//                echo 'Deploying....'
-//            }
-//        }
     }
 }
